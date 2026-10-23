@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{{ url_for('contactos.nuevo_contacto') }}">Nuevo contacto</a>
+<ul>
+  {% for c in contactos %}
+    <li>
+      {{ c.nombre }} - {{ c.telefono }} - {{ c.correo }}
+      [<a href="{{ url_for('contactos.editar_contacto', id=c.id) }}">Editar</a>]
+      [<a href="{{ url_for('contactos.eliminar_contacto', id=c.id) }}">Eliminar</a>]
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

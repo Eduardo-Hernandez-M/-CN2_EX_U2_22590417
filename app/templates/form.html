@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST">
+    Nombre: <input type="text" name="nombre" value="{{ contacto.nombre if contacto else '' }}"><br>
+    Teléfono: <input type="text" name="telefono" value="{{ contacto.telefono if contacto else '' }}"><br>
+    Correo: <input type="text" name="correo" value="{{ contacto.correo if contacto else '' }}"><br>
+    <input type="submit" value="Guardar">
+</form>
+<a href="{{ url_for('contactos.listar_contactos') }}">Volver</a>
+{% endblock %}
