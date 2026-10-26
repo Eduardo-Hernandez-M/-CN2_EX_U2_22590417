@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:13
+    container_name: blogtec_db
+    environment:
+      POSTGRES_USER: eddy
+      POSTGRES_PASSWORD: admin1234
+      POSTGRES_DB: blogtec_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Comenta o elimina la siguiente línea si no tienes el archivo init.sql en tu repositorio
+      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  adminer:
+    image: adminer
+    container_name: blogtec_adminer
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+
+  crud-blogtec:
+    build: .
+    image: cn2-agendatec:1.0.0
+    container_name: blogtec_crud
+    ports:
+      - "8020:5000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=eddy
+      - DB_PASSWORD=admin1234
+      - DB_NAME=blogtec_db
+      # Añade la URL completa para asegurar que SQLAlchemy se conecte al contenedor 'db'
+      - DATABASE_URL=postgresql://eddy:admin1234@db:5432/blogtec_db
+    depends_on:
+      - adminer
+      - db
+
+volumes:
+  pgdata:
