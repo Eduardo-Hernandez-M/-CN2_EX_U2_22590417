@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  web:
+    image: eduardohernandezmaqueda/agendatecex:latest
+    ports:
+      - "8020:5000" # Usa un puerto externo distinto al de tus compañeros para evitar choques
+    environment:
+      - DATABASE_URL=postgresql://postgres:admin1234@db:5432/agendatec_db
+    depends_on:
+      - db
+    networks:
+      - red_eduardo
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager # Fuerza a que la App se aloje en el Manager
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=agendatec_db
+    volumes:
+      - pgdata_eduardo:/var/lib/postgresql/data
+    networks:
+      - red_eduardo
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker # Fuerza a que Postgres se aloje en un Worker
+
+volumes:
+  pgdata_eduardo:
+
+networks:
+  red_eduardo:
+    driver: overlay
