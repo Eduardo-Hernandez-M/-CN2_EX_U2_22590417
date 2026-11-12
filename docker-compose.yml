@@ -4,7 +4,7 @@ services:
   web:
     image: eduardohernandezmaqueda/agendatecex:latest
     ports:
-      - "5000:5000" # Cambia a "8020:5000" si el puerto 5000 ya lo ocupa otro compañero
+      - "8022:5000" # Cambia a "8020:5000" si el puerto 5000 ya lo ocupa otro compañero
     environment:
       - DATABASE_URL=postgresql+psycopg://postgres:admin1234@db:5432/agendatec_db
     depends_on:
