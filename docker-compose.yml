@@ -1,42 +1,41 @@
+version: '3.8'
+
 services:
+  web:
+    image: eduardohernandezmaqueda/agendatecex:latest
+    ports:
+      - "8020:5000" # Usa un puerto externo distinto al de tus compañeros para evitar choques
+    environment:
+      - DATABASE_URL=postgresql://postgres:admin1234@db:5432/agendatec_db
+    depends_on:
+      - db
+    networks:
+      - red_eduardo
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager # Fuerza a que la App se aloje en el Manager
+
   db:
-    image: postgres:13
-    container_name: blogtec_db
+    image: postgres:15-alpine
     environment:
-      POSTGRES_USER: eddy
-      POSTGRES_PASSWORD: admin1234
-      POSTGRES_DB: blogtec_db
-    ports:
-      - "5432:5432"
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=agendatec_db
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      # Comenta o elimina la siguiente línea si no tienes el archivo init.sql en tu repositorio
-      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-
-  adminer:
-    image: adminer
-    container_name: blogtec_adminer
-    ports:
-      - "8081:8080"
-    depends_on:
-      - db
-
-  crud-blogtec:
-    build: .
-    image: cn2-agendatec:1.0.0
-    container_name: blogtec_crud
-    ports:
-      - "8020:5000"
-    environment:
-      - DB_HOST=db
-      - DB_USER=eddy
-      - DB_PASSWORD=admin1234
-      - DB_NAME=blogtec_db
-      # Añade la URL completa para asegurar que SQLAlchemy se conecte al contenedor 'db'
-      - DATABASE_URL=postgresql://eddy:admin1234@db:5432/blogtec_db
-    depends_on:
-      - adminer
-      - db
+      - pgdata_eduardo:/var/lib/postgresql/data
+    networks:
+      - red_eduardo
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker # Fuerza a que Postgres se aloje en un Worker
 
 volumes:
-  pgdata:
+  pgdata_eduardo:
+
+networks:
+  red_eduardo:
+    driver: overlay
