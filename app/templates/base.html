@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Agenda de Contactos V1.0</title>
+<html class="theme-light" style="background-color: #0d1117;">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Agenda de Contactos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/ee9903c79f.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+
 </head>
-<body>
-    <h1>AgendaTec V1.0.0</h1>
-    {% block content %}{% endblock %}
-</body>
+  <body >
+    <header>
+        <br>
+        <h1 class="title has-text-centered is-1" style="font-family: 'Orbitron', sans-serif; color:white">
+            AgendaTec
+          </h1>
+          <br>
+    </header>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+  </body>
 </html>
