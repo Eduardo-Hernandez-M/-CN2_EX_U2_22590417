@@ -1,10 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
-<form method="POST">
-    Nombre: <input type="text" name="nombre" value="{{ contacto.nombre if contacto else '' }}"><br>
-    Teléfono: <input type="text" name="telefono" value="{{ contacto.telefono if contacto else '' }}"><br>
-    Correo: <input type="text" name="correo" value="{{ contacto.correo if contacto else '' }}"><br>
-    <input type="submit" value="Guardar">
-</form>
-<a href="{{ url_for('contactos.listar_contactos') }}">Volver</a>
+<div class="columns">
+    <div class="column is-offset-3 is-6">
+        <div class="card">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4">Contacto</p>
+                    </div>
+                </div>
+                <div class="content">
+                    <form method="POST">
+                        <div class="field">
+                            <label class="label">Nombre:</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input is-link" type="text" name="nombre"
+                                    value="{{ contacto.nombre if contacto else '' }}">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Telefono:</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input is-link" type="text" name="telefono" 
+                                    value="{{ contacto.telefono if contacto else '' }}">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Correo:</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input is-link" type="text" name="correo"
+                                    value="{{ contacto.correo if contacto else '' }}">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <button class="button is-link " type="submit"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Guardar</button>
+                        <a class="button is-danger" href="{{ url_for('contactos.listar_contactos') }}"><i class="fa-solid fa-arrow-left"></i>&nbsp;Regresar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
